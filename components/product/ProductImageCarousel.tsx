@@ -9,21 +9,14 @@ import { cn } from '@/lib/utils';
 type ProductImageCarouselProps = {
   images: string[];
   alt: string;
-  /** If provided, the image area becomes a clickable link. Controls still work independently. */
   href?: string;
-  /** Next/image sizes attribute. */
   sizes?: string;
   priority?: boolean;
   className?: string;
-  /** Tailwind aspect-ratio utility; defaults to square. */
   aspect?: 'square' | 'portrait' | 'video';
-  /** If true, show arrows on the card without requiring hover (useful on touch devices / detail page). */
   alwaysShowControls?: boolean;
-  /** Hide the built-in dot indicators (e.g. when using external thumbnails). */
   hideDots?: boolean;
-  /** Hide the "1/N" counter badge. */
   hideCounter?: boolean;
-  /** Controlled mode: externally managed current index. */
   value?: number;
   onValueChange?: (index: number) => void;
 };
@@ -81,7 +74,6 @@ export function ProductImageCarousel({
         ASPECT_CLASS[aspect],
         className,
       )}
-      // Swipe on touch devices
       onTouchStart={(e) => {
         if (!multiple) return;
         touchStartX.current = e.touches[0]?.clientX ?? null;
@@ -93,7 +85,6 @@ export function ProductImageCarousel({
         if (Math.abs(delta) > 40) go(delta > 0 ? -1 : 1);
         touchStartX.current = null;
       }}
-      // Keyboard nav when the carousel has focus
       tabIndex={multiple ? 0 : -1}
       onKeyDown={(e) => {
         if (!multiple) return;
@@ -106,7 +97,6 @@ export function ProductImageCarousel({
         }
       }}
     >
-      {/* Slide track */}
       <div
         className="flex h-full w-full transition-transform duration-500 ease-out"
         style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
@@ -125,11 +115,6 @@ export function ProductImageCarousel({
         ))}
       </div>
 
-      {/*
-        Clickable overlay that takes users to the product page.
-        Sits above the slides (z-[1]) but below the controls (z-[2]),
-        so clicks on arrows/dots don't trigger navigation.
-      */}
       {href && (
         <Link
           href={href}
@@ -140,7 +125,6 @@ export function ProductImageCarousel({
 
       {multiple && (
         <>
-          {/* Prev / Next arrow buttons */}
           <button
             type="button"
             aria-label="Previous image"
@@ -168,7 +152,6 @@ export function ProductImageCarousel({
             <ChevronRight size={18} />
           </button>
 
-          {/* Dot indicators */}
           {!hideDots && (
             <div className="absolute bottom-2 left-1/2 z-[2] flex -translate-x-1/2 items-center gap-1 rounded-full bg-white/80 px-2 py-1 shadow ring-1 ring-ink-900/5 backdrop-blur">
               {images.map((_, i) => (
@@ -187,7 +170,6 @@ export function ProductImageCarousel({
             </div>
           )}
 
-          {/* Counter badge (bottom-right, away from sale / low-stock pills) */}
           {!hideCounter && (
             <div className="pointer-events-none absolute bottom-2 right-2 z-[2] rounded-full bg-ink-900/70 px-2 py-0.5 text-[11px] font-medium tabular-nums text-white backdrop-blur">
               {index + 1}/{count}
