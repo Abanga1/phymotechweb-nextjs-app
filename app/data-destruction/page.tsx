@@ -433,7 +433,7 @@ export default function DataDestructionPage() {
             </h2>
             <p className="mt-4 max-w-xl text-ink-200">
               Tell us the scope — media types, approximate quantity, required
-              sanitization level, and any regulatory framework in play. We'll
+              sanitization level, and any regulatory framework in play. We&rsquo;ll
               return a scoped quote, a draft BAA, and a destruction plan you can
               forward straight to your compliance team.
             </p>
