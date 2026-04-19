@@ -1,5 +1,3 @@
-// Security headers are defined inline here because next.config.mjs is loaded
-// outside the TypeScript pipeline. Keep this in sync with lib/security/headers.ts.
 const isProd = process.env.NODE_ENV === 'production';
 
 const csp = [
@@ -7,7 +5,7 @@ const csp = [
   "base-uri 'self'",
   "object-src 'none'",
   "frame-ancestors 'none'",
-  `script-src 'self' https://js.stripe.com ${isProd ? '' : "'unsafe-inline' 'unsafe-eval'"}`,
+  `script-src 'self' 'unsafe-inline' https://js.stripe.com${isProd ? '' : " 'unsafe-eval'"}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://images.unsplash.com https://picsum.photos https://*.supabase.co",
   "font-src 'self' data:",
